@@ -36,13 +36,6 @@ resource "azurerm_subnet" "subnet_client" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
-resource "azurerm_subnet" "subnet_firewall" {
-  name                 = var.subnets.firewall.name
-  address_prefixes     = var.subnets.firewall.address_prefixes
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-}
-
 resource "azurerm_subnet" "subnet_gateway" {
   name                 = var.subnets.gateway.name
   address_prefixes     = var.subnets.gateway.address_prefixes
@@ -100,9 +93,6 @@ resource "azurerm_network_interface" "nic_client" {
   name                = "nic-client-demo"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-
-  dns_servers = ["1.1.1.1", "8.8.8.8"]
-  # dns_servers = ["209.244.0.3", "209.244.0.4"]
 
   ip_configuration {
     name                          = "nic-client-internal"
@@ -175,5 +165,3 @@ resource "azurerm_virtual_network_gateway" "gateway" {
     }
   }
 }
-
-## firewall
