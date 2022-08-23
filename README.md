@@ -1,28 +1,78 @@
-- Create a **_Resource Group_**
-- Create a **_Virtual Network_**
-  - Create a subnet for webserver
-  - Create a subnet for client desktop
-  - Create a subnet for firewall (mandatory `AzureFirewallSubnet`)
-- Create a key pair to webserver virtual machine
-- Create **_Webserver Virtual Machine_**
-  - SSH connection
-  - install apache2
-- Create **_Client Virtual Machine_**
-  - Password connection
-  - install Desktop Manager interface
-  - install xrdp server
-  - install links and chrome browsers
-- Create a **_Firewall_**
-  - add new firewall policy
-  - add new public ip address
-- Create **_Route Table_**
-  - create route table subnet selecting the Client VM subnet
-  - create route table route association with prefix `0.0.0.0/0`, `Virtual Appliance`, `hop address` same as Firewall private IP
-- Configure Firewall policy (resource groups -> resources -> firewall-policy-created)
-  - add application rule collection
-  - add network rule collection
-  - add DNAT rule collection
-- Create a **_Virtual Network Gateway_**
-  - configure point-to-site certificate
-- Configure Client VM network interface
-  - add DNS servers
+# azure-network-concepts
+
+This project aims to study some concepts of Network provisioning on Azure using Terraform.
+
+## Branches Versions
+
+- **`v1`** - provisioning two private Virtual Machine with remote access by VPN
+- **`v2`** - same as `v1` with additional purpose of allow a specific website domain by Firewall policies **[WIP]**
+
+## First steps
+
+### 0. Configure Azure CLI on your local environment
+
+See official documentation: [Get started with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli)
+
+### 1. Generate and export certificates to P2S configuration
+
+```bash
+# run script to generate certificate
+./generate-certificate.sh
+```
+
+You will see `caCert.pem`, `caKey.pem`, `clientCert.pem`, `clientKey.pem`, `client.p12` and `files/vpnRootCert.txt` files created. Some those files will be very import to Point-to-site configuration. See official documentation: [Install certificates](https://docs.microsoft.com/en-us/azure/vpn-gateway/point-to-site-vpn-client-cert-linux#install-certificates).
+
+### 2. Create `demo.tfvars` files
+
+```bash
+mkdir envs && touch envs/demo.tfvars
+```
+
+After that, edit the content of `demo.tfvars` with:
+
+```tfvars
+ssh_pub_key_path = "~/.ssh/id_rsa.pub"
+subnets = {
+  "app" = {
+    name             = "subnet-app-demo",
+    address_prefixes = ["10.0.1.0/24"]
+  },
+  "client" = {
+    name             = "subnet-client-demo",
+    address_prefixes = ["10.0.2.0/24"]
+  },
+  "gateway" = {
+    name             = "GatewaySubnet", # do not rename
+    address_prefixes = ["10.0.0.0/24"]
+  }
+}
+
+```
+
+## Running Terraform commands
+
+### 1. Init
+
+```bash
+terraform init
+```
+
+### 2. Plan
+
+```bash
+terraform plan -var-file=envs/demo.tfvars
+```
+
+### 3. Apply
+
+```bash
+terraform apply -var-file=envs/demo.tfvars
+
+# or
+terrafor appy -auto-approve -var-file=envs/demo.tfvars
+
+```
+
+## Terraform Reference
+
+- https://registry.terraform.io/providers/hashicorp/azurerm/3.19.1

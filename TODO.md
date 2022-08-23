@@ -1,0 +1,28 @@
+- Create a **_Resource Group_**
+- Create a **_Virtual Network_**
+  - Create a subnet for webserver
+  - Create a subnet for client desktop
+  - Create a subnet for firewall (mandatory `AzureFirewallSubnet`)
+- Create a key pair to webserver virtual machine
+- Create **_Webserver Virtual Machine_**
+  - SSH connection
+  - install apache2
+- Create **_Client Virtual Machine_**
+  - Password connection
+  - install Desktop Manager interface
+  - install xrdp server
+  - install links and chrome browsers
+- Create a **_Firewall_**
+  - add new firewall policy
+  - add new public ip address
+- Create **_Route Table_**
+  - create route table subnet selecting the Client VM subnet
+  - create route table route association with prefix `0.0.0.0/0`, `Virtual Appliance`, `hop address` same as Firewall private IP
+- Configure Firewall policy (resource groups -> resources -> firewall-policy-created)
+  - add application rule collection
+  - add network rule collection
+  - add DNAT rule collection
+- Create a **_Virtual Network Gateway_**
+  - configure point-to-site certificate
+- Configure Client VM network interface
+  - add DNS servers
