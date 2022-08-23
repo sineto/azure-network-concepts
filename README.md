@@ -5,7 +5,7 @@ This project aims to study some concepts of Network provisioning on Azure using 
 ## Branches Versions
 
 - **`v1`** - provisioning two private Virtual Machine with remote access by VPN
-- **`v2`** - same as `v1` with additional purpose of allow a specific website domain by Firewall policies **[WIP]**
+- **`v2`** **[WIP]** - same as `v1` with additional purpose of allow a specific website domain by Firewall policies
 
 ## First steps
 
