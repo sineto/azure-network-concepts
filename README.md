@@ -24,6 +24,8 @@ See official documentation: [Get started with Azure CLI](https://docs.microsoft.
 
 You will see `caCert.pem`, `caKey.pem`, `clientCert.pem`, `clientKey.pem`, `client.p12` and `files/vpnRootCert.txt` files created. Some those files will be very import to Point-to-site configuration. See official documentation: [Install certificates](https://docs.microsoft.com/en-us/azure/vpn-gateway/point-to-site-vpn-client-cert-linux#install-certificates).
 
+**_NOTE: please, read the content of the script_**
+
 ### 2. Create `demo.tfvars` files
 
 ```bash
