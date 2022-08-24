@@ -48,6 +48,10 @@ subnets = {
   "gateway" = {
     name             = "GatewaySubnet", # do not rename
     address_prefixes = ["10.0.0.0/24"]
+  },
+  "firewall" = {
+    name             = "AzureFirewallSubnet", # do not rename
+    address_prefixes = ["10.0.3.0/24"]
   }
 }
 
