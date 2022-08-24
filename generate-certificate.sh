@@ -16,4 +16,4 @@ ipsec pki --gen --outform pem >"${USERNAME}Key.pem"
 ipsec pki --pub --in "${USERNAME}Key.pem" | ipsec pki --issue --cacert caCert.pem --cakey caKey.pem --dn "CN=${USERNAME}" --san "${USERNAME}" --flag clientAuth --outform pem >"${USERNAME}Cert.pem"
 
 openssl pkcs12 -in "${USERNAME}Cert.pem" -inkey "${USERNAME}Key.pem" -certfile caCert.pem -export -out "${USERNAME}.p12" -password "pass:${PASSWORD}"
-mkdir -p files && openssl x509 -in "${USERNAME}Cert.pem" -outform der | base64 -w0 >>files/vpnRootCert.txt
+mkdir -p files && openssl x509 -in "caCert.pem" -outform der | base64 -w0 >files/vpnRootCert.txt
