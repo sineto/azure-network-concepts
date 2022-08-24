@@ -73,7 +73,7 @@ terraform plan -var-file=envs/demo.tfvars
 terraform apply -var-file=envs/demo.tfvars
 
 # or
-terrafor appy -auto-approve -var-file=envs/demo.tfvars
+terrafor apply -auto-approve -var-file=envs/demo.tfvars
 
 ```
 
